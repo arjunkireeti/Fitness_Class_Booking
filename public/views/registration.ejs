@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <style>
+        /* CSS styling remains the same */
+    </style>
+</head>
+<body>
+
+    <form class="form" id="registrationForm">
+        <h1 class="title">Register</h1>
+        <label>
+            <input class="input" type="text" id="name" placeholder="" required>
+            <span>Name </span>
+        </label>
+
+        <label>
+            <input class="input" type="email" id="email" placeholder="" required>
+            <span>Email</span>
+        </label>
+
+        <label>
+            <input class="input" type="text" id="mobile" placeholder="" required>
+            <span>Mobile Number</span>
+        </label>
+
+        <label>
+            <input class="input" type="number" id="age" placeholder="" required>
+            <span>Age</span>
+        </label>
+
+        <div class="height-weight-container">
+            <label class="half-width">
+                <input class="input" type="number" id="height" placeholder="" required>
+                <span>Height (ft)</span>
+            </label>
+
+            <label class="half-width">
+                <input class="input" type="number" id="weight" placeholder="" required>
+                <span>Weight (kg)</span>
+            </label>
+        </div>
+
+        <label>
+            <input class="input" type="password" id="password" placeholder="" required>
+            <span>Password</span>
+        </label>
+
+        <label>
+            <input class="input" type="password" id="rePassword" placeholder="" required>
+            <span>Confirm Password</span>
+        </label>
+
+        <button class="submit" type="submit" >Submit</button>
+
+        <p class="signin">Already have an account? <a href="<%= loginPage %>">Signin</a></p>
+    </form>
+    
+    <button class="back-home" onclick="window.location.href='<%= homePage %>'">Back to Home</button>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            clearErrors();
+
+            let valid = true;
+
+            const name = document.getElementById('name').value;
+            if (name.trim() === "") {
+                showError('name', 'Name is required');
+                valid = false;
+            }
+
+            const email = document.getElementById('email').value;
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                showError('email', 'Enter a valid email');
+                valid = false;
+            }
+
+            const mobile = document.getElementById('mobile').value;
+            if (mobile.trim() === "" || isNaN(mobile)) {
+                showError('mobile', 'Mobile number is required and must be a valid number');
+                valid = false;
+            }
+
+            const age = document.getElementById('age').value;
+            if (age <= 0 || isNaN(age)) {
+                showError('age', 'Enter a valid age');
+                valid = false;
+            }
+
+            const height = document.getElementById('height').value;
+            if (height <= 0 || isNaN(height)) {
+                showError('height', 'Enter a valid height');
+                valid = false;
+            }
+
+            const weight = document.getElementById('weight').value;
+            if (weight <= 0 || isNaN(weight)) {
+                showError('weight', 'Enter a valid weight');
+                valid = false;
+            }
+
+            const password = document.getElementById('password').value;
+            if (password.length < 6) {
+                showError('password', 'Password must be at least 6 characters long');
+                valid = false;
+            }
+
+            const rePassword = document.getElementById('rePassword').value;
+            if (password !== rePassword) {
+                showError('rePassword', 'Passwords do not match');
+                valid = false;
+            }
+
+            if (valid) {
+                window.location.href = "<%= homePage %>"; 
+            }
+        });
+
+        function showError(id, message) {
+            alert(`${id}: ${message}`);
+        }
+
+        function clearErrors() {
+        }
+    </script>
+
+</body>
+</html>
